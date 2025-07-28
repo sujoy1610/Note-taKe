@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Trash2 } from "lucide-react";
-// import { HDLogo } from "@/components/HDLogo";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/context/AuthContext";
@@ -46,20 +51,9 @@ const Dashboard = () => {
   const handleDeleteNote = (id: string) => {
     deleteNote(id);
     toast({
-      title: "Success", 
+      title: "Success",
       description: "Note deleted successfully!"
     });
-  };
-
-  const maskEmail = (email: string) => {
-    const [username, domain] = email.split('@');
-    const maskedUsername = username.length > 2 
-      ? username.slice(0, 2) + 'x'.repeat(username.length - 2)
-      : 'x'.repeat(username.length);
-    const maskedDomain = domain.split('.').map(part => 
-      part.length > 1 ? 'x'.repeat(part.length) : part
-    ).join('.');
-    return `${maskedUsername}@${maskedDomain}`;
   };
 
   return (
@@ -67,12 +61,11 @@ const Dashboard = () => {
       {/* Header */}
       <header className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-4">
-          {/* <HDLogo size="sm" /> */}
-          <img src={logo} alt=""/>
+          <img src={logo} alt="Logo" className="w-8 h-8" />
           <h1 className="text-xl font-semibold">Dashboard</h1>
         </div>
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           onClick={handleSignOut}
           className="text-hd-blue hover:text-hd-blue/80"
         >
@@ -82,13 +75,13 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <main className="p-4 max-w-4xl mx-auto">
-        {/* Welcome Section */}
+        {/* Welcome */}
         <div className="bg-card rounded-lg p-6 mb-6 border">
           <h2 className="text-xl font-semibold mb-2">Welcome, {user?.name}!</h2>
-          <p className="text-hd-gray">Email: {user?.email || 'unknown'}</p>
+          <p className="text-hd-gray">Email: {user?.email || "unknown"}</p>
         </div>
 
-        {/* Create Note Button */}
+        {/* Create Note Dialog */}
         <div className="mb-6">
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
@@ -106,7 +99,7 @@ const Dashboard = () => {
                   <Input
                     placeholder="Enter note title"
                     value={newNote.title}
-                    onChange={(e) => setNewNote(prev => ({ ...prev, title: e.target.value }))}
+                    onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
                   />
                 </div>
                 <div className="space-y-2">
@@ -114,19 +107,19 @@ const Dashboard = () => {
                   <Textarea
                     placeholder="Enter note content (optional)"
                     value={newNote.content}
-                    onChange={(e) => setNewNote(prev => ({ ...prev, content: e.target.value }))}
+                    onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
                     rows={4}
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Button 
+                  <Button
                     onClick={handleCreateNote}
                     className="flex-1 bg-hd-blue hover:bg-hd-blue/90 text-white"
                   >
                     Create
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     onClick={() => setIsCreateDialogOpen(false)}
                     className="flex-1"
                   >
@@ -138,32 +131,34 @@ const Dashboard = () => {
           </Dialog>
         </div>
 
-        {/* Notes Section */}
+        {/* Notes List */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Notes</h3>
           <div className="space-y-3">
             {notes.map((note) => (
-              <div 
-                key={note.id}
+              <div
+                key={note._id}
                 className="flex items-center justify-between p-4 bg-hd-gray-light rounded-lg border"
               >
                 <div className="flex-1">
                   <h4 className="font-medium text-foreground">{note.title}</h4>
                   {note.content && (
-                    <p className="text-sm text-hd-gray mt-1 line-clamp-2">{note.content}</p>
+                    <p className="text-sm text-hd-gray mt-1 line-clamp-2">
+                      {note.content}
+                    </p>
                   )}
                 </div>
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleDeleteNote(note.id)}
+                  onClick={() => handleDeleteNote(note._id)}
                   className="text-hd-gray hover:text-destructive"
                 >
                   <Trash2 size={16} />
                 </Button>
               </div>
             ))}
-            
+
             {notes.length === 0 && (
               <div className="text-center py-8 text-hd-gray">
                 <p>No notes yet. Create your first note!</p>

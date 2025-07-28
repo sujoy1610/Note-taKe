@@ -10,6 +10,7 @@ import axios from "axios";
 import { useAuth } from "./AuthContext";
 
 interface Note {
+  id(id: any): void;
   _id: string;             // comes from MongoDB
   title: string;
   content: string;
