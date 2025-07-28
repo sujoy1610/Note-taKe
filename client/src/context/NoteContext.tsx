@@ -4,12 +4,12 @@ import {
   useEffect,
   useState,
   type ReactNode,
+
 } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
 
 interface Note {
-  id: Key | null | undefined;
   _id: string;             // comes from MongoDB
   title: string;
   content: string;
