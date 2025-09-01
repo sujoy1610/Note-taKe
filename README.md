@@ -14,7 +14,7 @@ A secure, modern, and responsive Note-Taking web app built with:
 ##  Live Demo
 
 -  **Frontend:** [https://note-take-dusky.vercel.app/signup](#)
--  **Backend:** [https://your-backend.onrender.com](#)
+-  **Backend:** [https://note-take-server.onrender.com](#)
 - Test Email OTP: Use any valid email (simulated or live)
 
 ---
