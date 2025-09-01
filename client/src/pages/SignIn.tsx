@@ -67,9 +67,13 @@ const SignIn = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-background">
       {/* Form Side */}
-      <div className="flex md:absolute justify-center md:justify-start w-full md:w-auto top-4 left-4">
-    <img src={logo} alt="App Logo" className="w-20 h-16 mt-4 md:mt-0 md:ml-4" />
-  </div>
+   <div className="flex justify-center md:justify-start mb-6">
+        <img
+          src={logo}
+          alt="App Logo"
+          className="w-16 h-16 md:ml-4  shadow-lg hover:scale-110 transition-transform duration-300 object-contain"
+        />
+      </div>
 
        <div className="w-full md:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md space-y-6">

@@ -12,7 +12,7 @@ const SignUp = () => {
     name: "",
     dateOfBirth: "",
     email: "",
-    otp: ""
+    otp: "",
   });
 
   const [otpSent, setOtpSent] = useState(false);
@@ -25,7 +25,11 @@ const SignUp = () => {
 
   const handleSendOtp = async () => {
     if (!formData.email) {
-      toast({ title: "Error", description: "Please enter your email", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Please enter your email",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -34,18 +38,27 @@ const SignUp = () => {
       toast({ title: "OTP Sent", description: "Check your email inbox" });
       setOtpSent(true);
     } else {
-      toast({ title: "Error", description: res.message, variant: "destructive" });
+      toast({
+        title: "Error",
+        description: res.message,
+        variant: "destructive",
+      });
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.dateOfBirth || !formData.otp) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.dateOfBirth ||
+      !formData.otp
+    ) {
       toast({
         title: "Error",
         description: "Please fill in all fields and enter OTP",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
@@ -54,28 +67,38 @@ const SignUp = () => {
       name: formData.name,
       dob: formData.dateOfBirth,
       email: formData.email,
-      otp: formData.otp
+      otp: formData.otp,
     });
 
     if (res.success) {
       toast({ title: "Success", description: "Account created successfully!" });
       navigate("/signin");
     } else {
-      toast({ title: "Error", description: res.message, variant: "destructive" });
+      toast({
+        title: "Error",
+        description: res.message,
+        variant: "destructive",
+      });
     }
   };
 
   return (
     <div className="min-h-screen flex">
-      <div className="flex justify-center md:justify-start mb-4">
-  <img src={logo} alt="App Logo" className="w-16 h-16 md:ml-4" />
-</div>
+      <div className="flex justify-center md:justify-start mb-6">
+        <img
+          src={logo}
+          alt="App Logo"
+          className="w-16 h-16 md:ml-4  shadow-lg hover:scale-110 transition-transform duration-300 object-contain"
+        />
+      </div>
 
       <div className="flex-1 flex items-center justify-center p-4 bg-background">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center space-y-2">
             <h1 className="text-2xl font-bold">Sign up</h1>
-            <p className="text-sm text-hd-gray">Sign up to enjoy the features of HD</p>
+            <p className="text-sm text-hd-gray">
+              Sign up to enjoy the features of HD
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -94,7 +117,9 @@ const SignUp = () => {
               <Input
                 type="date"
                 value={formData.dateOfBirth}
-                onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("dateOfBirth", e.target.value)
+                }
                 className="h-12"
               />
             </div>
@@ -142,7 +167,9 @@ const SignUp = () => {
           </form>
 
           <div className="text-center">
-            <span className="text-sm text-hd-gray">Already have an account? </span>
+            <span className="text-sm text-hd-gray">
+              Already have an account?{" "}
+            </span>
             <Link to="/signin" className="text-sm text-hd-blue hover:underline">
               Sign in
             </Link>

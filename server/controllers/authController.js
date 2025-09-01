@@ -6,14 +6,18 @@ import { sendOTPEmail } from "../utils/sendMail.js";
 // Send OTP
 export const sendOTP = async (req, res) => {
   const { email } = req.body;
-  const code = generateOTP();
-  const expiresAt = new Date(Date.now() + 5 * 60000); // 5 mins
+  if (!email) return res.status(400).json({ error: "Email is required" });
 
-  await OTP.findOneAndDelete({ email });
+  const code = generateOTP();
+  const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
+
+  // delete old OTPs for this email
+  await OTP.deleteMany({ email });
   await OTP.create({ email, code, expiresAt });
 
   await sendOTPEmail(email, code);
-  res.json({ message: "OTP sent successfully" });
+
+  res.json({ message: "OTP sent" });
 };
 
 // Signup
